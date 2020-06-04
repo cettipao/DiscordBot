@@ -16,10 +16,13 @@ async def sum(ctx, num1: int, num2:int):
 
 @bot.command()
 async def youtube(ctx,*,search):
-    query_string = parse.urlencode({"search_query": search})
-    html_content = request.urlopen("http://www.youtube.com/results?" + query_string)
-    search_results = re.findall("href=\*\\/watch\\?v=(.{11})",html_content.read().decode())
-    await ctx.send("https://www.youtube.com/watch?v=" + search_results[0])
+    query_string = parse.urlencode({'search_query': search})
+    html_content = request.urlopen('http://www.youtube.com/results?' + query_string)
+    # print(html_content.read().decode())
+    search_results = re.findall('href=\"\\/watch\\?v=(.{11})', html_content.read().decode())
+    print(search_results)
+    # I will put just the first result, you can loop the response to show more results
+    await ctx.send('https://www.youtube.com/watch?v=' + search_results[0])
 
 @bot.command()
 async def info(ctx):
@@ -40,4 +43,4 @@ async def on_ready():
     await bot.change_presence(activity=discord.Streaming(name="La Jeepeta", url="https://www.youtube.com/watch?v=TMc4HUWFVXU"))
     print('My bot is Ready')
 
-bot.run('')
+bot.run('NzE3NzY3ODgzMTQ4NDkyOTMw.XtfWAg.0M5pF6YCcSW7igaZsR2vM9TgIXA')
